@@ -1807,11 +1807,13 @@ jobs:
         run: |
           echo "::group::Belkin F9K1103 Config Fix"
           # The belkin config is named bn750db.config but the workflow searches for F9K1103.config
-          if [ ! -L "padavan-ng/trunk/configs/templates/F9K1103.config" ]; then
-            ln -sf belkin/bn750db.config padavan-ng/trunk/configs/templates/F9K1103.config
-            echo "✅ Created symlink: F9K1103.config -> belkin/bn750db.config"
+          # find -type f does NOT follow symlinks, so we COPY the file instead
+          if [ ! -f "padavan-ng/trunk/configs/templates/F9K1103.config" ]; then
+            cp -f padavan-ng/trunk/configs/templates/belkin/bn750db.config \
+               padavan-ng/trunk/configs/templates/F9K1103.config
+            echo "✅ Copied bn750db.config -> F9K1103.config"
           else
-            echo "ℹ️ Symlink already exists"
+            echo "ℹ️ F9K1103.config already exists"
           fi
           echo "::endgroup::"
 
