@@ -1803,9 +1803,22 @@ jobs:
           
           echo "::endgroup::"
 
+      - name: 🔗 Belkin F9K1103 Config Fix
+        run: |
+          echo "::group::Belkin F9K1103 Config Fix"
+          # The belkin config is named bn750db.config but the workflow searches for F9K1103.config
+          if [ ! -L "padavan-ng/trunk/configs/templates/F9K1103.config" ]; then
+            ln -sf belkin/bn750db.config padavan-ng/trunk/configs/templates/F9K1103.config
+            echo "✅ Created symlink: F9K1103.config -> belkin/bn750db.config"
+          else
+            echo "ℹ️ Symlink already exists"
+          fi
+          echo "::endgroup::"
+
       - name: 🌐 Custom Language Selector
         run: |
           echo "::group::Setting up WebUI Language"
+
           
           # 1. 取得使用者選擇與目標機型
           SELECTED_LANG_OPTION="${{ inputs.language_select }}"
