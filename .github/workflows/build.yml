@@ -293,7 +293,7 @@ jobs:
           TEMPLATE_DIR="padavan-ng/trunk/configs/templates"
           PATTERN_A=$(echo "$TNAME" | sed 's/-/_/g')
           PATTERN_B=$(echo "$TNAME")
-          TARGET_FILE=$(find "$TEMPLATE_DIR" -maxdepth 2 \( -iname "${PATTERN_A}.config" -o -iname "${PATTERN_B}.config" \) | head -n 1)
+          TARGET_FILE=$(find "$TEMPLATE_DIR" -maxdepth 3 \( -iname "${PATTERN_A}.config" -o -iname "${PATTERN_B}.config" \) | head -n 1)
           
           if [ -z "$TARGET_FILE" ]; then
             echo "::warning:: Template not found, using fallback..."
